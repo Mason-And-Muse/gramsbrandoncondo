@@ -254,7 +254,6 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    cursor:pointer;
     border-bottom:1px solid var(--line);
     overflow:hidden;
   }
@@ -277,26 +276,6 @@
     padding:0 16px;
   }
   .photo-placeholder svg{width:26px; height:26px; opacity:0.55;}
-  .photo-zone:hover .photo-placeholder{color:var(--brass);}
-  .photo-remove{
-    position:absolute;
-    top:8px;
-    right:8px;
-    background:rgba(46,36,25,0.72);
-    color:#fff;
-    border:none;
-    width:24px;
-    height:24px;
-    border-radius:50%;
-    font-size:14px;
-    line-height:1;
-    cursor:pointer;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:4;
-  }
-  .photo-zone.has-photo .photo-remove{display:flex;}
 
   .card-body{
     padding:18px 16px 16px;
@@ -412,34 +391,6 @@
     border-color:var(--brass);
     opacity:1;
   }
-  .thumb-add{
-    width:36px;
-    height:36px;
-    flex-shrink:0;
-    border:1.5px dashed var(--line);
-    border-radius:3px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:var(--ink-soft);
-    cursor:pointer;
-    font-size:16px;
-  }
-  .add-another-btn{
-    background:none;
-    border:1px dashed var(--line);
-    color:var(--brass);
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    padding:6px 8px;
-    border-radius:4px;
-    cursor:pointer;
-    align-self:flex-start;
-  }
-  .add-another-btn:hover{
-    background:rgba(138,106,47,0.08);
-  }
-
   .empty-state{
     text-align:center;
     padding:80px 20px;
@@ -461,8 +412,6 @@
     letter-spacing:0.04em;
   }
 
-  input[type=file]{display:none;}
-
   @media (prefers-reduced-motion: reduce){
     *{transition:none !important;}
   }
@@ -481,7 +430,7 @@
   <div class="header-inner">
     <div class="eyebrow">Estate Inventory &middot; Condo Contents</div>
     <h1>What's Left to Sort</h1>
-    <p class="subhead">A working catalog of everything cataloged from the condo &mdash; tap any photo box to add a picture from your phone or computer. Filter below by room or by what's happening to it.</p>
+    <p class="subhead">A working catalog of everything cataloged from the condo. Filter below by room or by what's happening to it.</p>
   </div>
   <div class="stamp">Oct 1952 &ndash; Present</div>
 </header>
@@ -536,7 +485,6 @@ const emptyState = document.getElementById('emptyState');
 let activeCategory = 'All';
 let photoCache = {};
 let activePhotoIndex = {};
-let commentsCache = {};
 
 const CATEGORIES = ['All', 'Sell', 'Keep', 'Donate', 'Free', 'TBD'];
 
@@ -572,66 +520,6 @@ function valueSortKey(v){
   return nums.reduce((a,b)=>a+b,0) / nums.length;
 }
 
-// ---- Shared live data store ----
-// This page is meant to be hosted as a static file (not viewed inside Claude),
-// so it can't use Claude's built-in artifact storage. Instead it reads/writes
-// a single shared JSON "blob" via jsonblob.com, a free no-signup JSON store
-// that's designed for exactly this (public read/write over CORS, no API key).
-//
-// SETUP (one-time, do this before sharing the link):
-//   1. Create a blob by POSTing {} to https://jsonblob.com/api/jsonBlob
-//      Easiest way: run this once from a terminal:
-//        curl -X POST -H "Content-Type: application/json" -d "{}" \
-//          -D - https://jsonblob.com/api/jsonBlob
-//      The response headers include a "Location" line ending in a long ID,
-//      e.g. https://jsonblob.com/api/jsonBlob/1234567890123456789
-//   2. Copy that ID into DATA_BLOB_ID below, replacing the placeholder.
-//   3. Re-upload/host the file with that change.
-//
-// Notes/photos added by visitors write to that shared blob, so everyone who
-// opens the link sees the same data. Since there's no login and no conflict
-// resolution, two people saving at the exact same moment could overwrite
-// each other -- fine for casual family use, not built for heavy concurrent traffic.
-
-const DATA_BLOB_ID = 'REPLACE_WITH_YOUR_JSONBLOB_ID';
-const DATA_BLOB_URL = `https://jsonblob.com/api/jsonBlob/${DATA_BLOB_ID}`;
-const DATA_CONFIGURED = DATA_BLOB_ID !== 'REPLACE_WITH_YOUR_JSONBLOB_ID';
-
-let remoteData = { photos: {}, comments: {} };
-
-async function loadRemoteData(){
-  if(!DATA_CONFIGURED) return { photos: {}, comments: {} };
-  try{
-    const res = await fetch(DATA_BLOB_URL);
-    if(res.ok){
-      const data = await res.json();
-      return { photos: data.photos || {}, comments: data.comments || {} };
-    }
-  }catch(e){ console.error('load failed', e); }
-  return { photos: {}, comments: {} };
-}
-
-async function saveRemoteData(){
-  if(!DATA_CONFIGURED){
-    console.warn('DATA_BLOB_ID not set -- changes will not be saved. See setup notes at the top of the script.');
-    return;
-  }
-  try{
-    await fetch(DATA_BLOB_URL, {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(remoteData)
-    });
-  }catch(e){ console.error('save failed', e); }
-}
-
-
-async function saveComments(id, commentsArr){
-  remoteData.comments[id] = commentsArr;
-  await saveRemoteData();
-}
-
-
 function cardTemplate(item){
   const photos = photoCache[item.id] || [];
   const activeIdx = activePhotoIndex[item.id] || 0;
@@ -644,7 +532,7 @@ function cardTemplate(item){
     <div class="card" data-id="${item.id}">
       <div class="tag-hole"></div>
       <div class="tag-id">#${String(item.id).padStart(2,'0')}</div>
-      <div class="photo-zone ${mainPhoto ? 'has-photo' : ''}" data-id="${item.id}">
+      <div class="photo-zone" data-id="${item.id}">
         ${mainPhoto
           ? `<img src="${mainPhoto}" alt="${item.desc.replace(/"/g,'&quot;')}">`
           : `<div class="photo-placeholder">
@@ -669,7 +557,6 @@ function cardTemplate(item){
           <a class="email-owner-link" href="mailto:asmason@fastmail.com?subject=${encodeURIComponent('Item #' + String(item.id).padStart(2,'0'))}">Email the owner about this item</a>
         </div>
       </div>
-      <input type="file" accept="image/*" capture="environment" id="file-${item.id}">
     </div>
   `;
 }
@@ -720,7 +607,7 @@ function render(){
   attachHandlers();
 }
 
-async function init(){
+function init(){
   buildChips();
   buildRoomOptions();
   searchInput.addEventListener('input', render);
@@ -731,21 +618,6 @@ async function init(){
   ITEMS.forEach(item => {
     if(item.photos && Array.isArray(item.photos)) photoCache[item.id] = item.photos.slice();
     else if(item.photo) photoCache[item.id] = [item.photo];
-  });
-  render();
-
-  if(!DATA_CONFIGURED){
-    console.warn('DATA_BLOB_ID is not set -- shared photos & notes are disabled until this page is configured. See the setup notes above loadRemoteData() in the script.');
-    return;
-  }
-
-  // Then let the shared live data (from anyone who has opened this page) take precedence
-  remoteData = await loadRemoteData();
-  Object.keys(remoteData.photos).forEach(id => {
-    if(remoteData.photos[id] && remoteData.photos[id].length) photoCache[id] = remoteData.photos[id];
-  });
-  Object.keys(remoteData.comments).forEach(id => {
-    if(remoteData.comments[id] && remoteData.comments[id].length) commentsCache[id] = remoteData.comments[id];
   });
   render();
 }
