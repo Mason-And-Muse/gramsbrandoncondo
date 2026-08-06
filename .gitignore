@@ -1,0 +1,9 @@
+xcdebugger
+
+DerivedData/
+build/
+xcuserdata/
+
+.DS_Store
+
+.obsidian/
