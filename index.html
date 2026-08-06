@@ -368,63 +368,13 @@
     margin:0;
   }
 
-  .comments-section{
+  .email-owner{
     margin-top:10px;
     padding-top:10px;
     border-top:1px dashed var(--line);
   }
-  .comments-label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10px;
-    letter-spacing:0.06em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-    margin-bottom:6px;
-  }
-  .comments-list{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-    margin-bottom:8px;
-  }
-  .comment-item{
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:6px 8px;
-    font-size:12.5px;
-    line-height:1.4;
-  }
-  .comment-name{
-    font-weight:600;
-    color:var(--walnut);
-    margin-right:6px;
-  }
-  .comment-text{
-    color:var(--ink);
-  }
-  .comment-empty{
-    font-size:12px;
-    color:var(--ink-soft);
-    font-style:italic;
-    margin-bottom:8px;
-  }
-  .comment-form{
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-  }
-  .comment-name-input, .comment-text-input{
-    font-family:'Source Sans 3', sans-serif;
-    font-size:12.5px;
-    padding:6px 8px;
-    border:1px solid var(--line);
-    border-radius:4px;
-    background:var(--paper-white);
-    color:var(--ink);
-    resize:none;
-  }
-  .comment-submit{
+  .email-owner-link{
+    display:inline-block;
     align-self:flex-start;
     background:var(--walnut);
     color:var(--paper-white);
@@ -435,9 +385,10 @@
     font-size:11px;
     text-transform:uppercase;
     letter-spacing:0.05em;
+    text-decoration:none;
     cursor:pointer;
   }
-  .comment-submit:hover{
+  .email-owner-link:hover{
     background:var(--walnut-soft);
   }
 
@@ -565,7 +516,7 @@
 <footer>Built from the room-by-room inventory &middot; photos stored on this page only, for family &amp; buyer viewing</footer>
 
 <script>
-const ITEMS = [{"id": 1, "room": "Primary Bedroom", "desc": "Three-piece dresser/hutch set, caramel wood, brand Kling (Mayville, NY). Base 48\"Wx30\"Hx17\"D, 8 drawers, brass batwing pulls with eagle medallion detail; two matching hutch pieces 24\"Wx45\"H, 3 adjustable shelves each.", "category": "TBD", "value": "$200-400", "condition": "Excellent/Very Good", "notes": "Maker's mark confirmed: Kling", "photos": ["IMG_3848.jpeg", "item01_photo2.jpg", "item01_photo3.jpg"]}, {"id": 2, "room": "Primary Bedroom", "desc": "Second dresser, darker wood, ornate pulls, detachable mirror, brand Harden (Pennfield Traditional). 60\"Wx21\"Dx35\"H, 4+4+4 drawer config, mirror 30.5\"Hx42\"W.", "category": "TBD", "value": "$150-300", "condition": "Excellent/Very Good", "notes": "Maker's mark confirmed: Harden", "photos": ["item02_photo1.jpg"]}, {"id": 3, "room": "Primary Bedroom", "desc": "Two twin bed frames matching Harden dresser set. Headboard 38\"Hx43\"W, footboard 30\"Hx42.5\"W, standard 76\"x39\" frame assumed.", "category": "TBD", "value": "$150-300 (pair)", "condition": "Excellent/Very Good", "notes": "Brand: Harden", "photos": ["item03_photo1.jpg"]}, {"id": 4, "room": "Primary Bedroom", "desc": "Nightstand matching Harden set. 28\"Hx20\"Wx15.5\"D, top/bottom drawers 15.5\"Wx3.5\"H each.", "category": "TBD", "value": "$50-100", "condition": "Very Good", "notes": "Brand: Harden", "photos": ["IMG_3834.jpeg"]}, {"id": 5, "room": "Primary Bedroom", "desc": "Telephone stand/petite desk + chair. Chair 30.5\"H, seat 13\"Wx13.75\"D; desk 19\"Wx13\"D top, 29.5\"H, alcove 15\"Wx5\"H.", "category": "TBD", "value": "$40-80", "condition": "Very Good", "notes": "No maker's mark found", "photos": ["item05_photo1.jpg", "item05_photo2.jpg"]}, {"id": 6, "room": "Primary Bedroom", "desc": "Pair of crystal-base/brass lamps, cream ruffled shades. 21\"H, 12\" shade diameter.", "category": "TBD", "value": "$40-80 (pair)", "condition": "Good", "notes": "", "photos": ["item06_photo1.jpg"]}, {"id": 7, "room": "Primary Bedroom", "desc": "Taller lamp, ivory china body, gauze shade. 25.5\"H total.", "category": "TBD", "value": "$30-60", "condition": "Body Good / Shade Excellent", "notes": "", "photos": ["item07_photo1.jpg"]},
+const ITEMS = [{"id": 1, "room": "Primary Bedroom", "desc": "Three-piece dresser/hutch set, caramel wood, brand Kling (Mayville, NY). Base 48\"Wx30\"Hx17\"D, 8 drawers, brass batwing pulls with eagle medallion detail; two matching hutch pieces 24\"Wx45\"H, 3 adjustable shelves each.", "category": "TBD", "value": "$200-400", "condition": "Excellent/Very Good", "notes": "Maker's mark confirmed: Kling", "photos": ["IMG_3848.jpeg", "item01_photo2.jpg", "item01_photo3.jpg"]}, {"id": 2, "room": "Primary Bedroom", "desc": "Large dresser, darker wood, ornate pulls, detachable mirror, brand Harden (Pennfield Traditional). 60\"Wx21\"Dx35\"H, 4+4+4 drawer config, mirror 30.5\"Hx42\"W.", "category": "TBD", "value": "$150-300", "condition": "Excellent/Very Good", "notes": "Maker's mark confirmed: Harden", "photos": ["IMG_3821.jpeg"]}, {"id": 3, "room": "Primary Bedroom", "desc": "Two twin bed frames matching Harden dresser set. Headboard 38\"Hx43\"W, footboard 30\"Hx42.5\"W, standard 76\"x39\" frame assumed.", "category": "TBD", "value": "$150-300 (pair)", "condition": "Excellent/Very Good", "notes": "Brand: Harden", "photos": ["item03_photo1.jpg"]}, {"id": 4, "room": "Primary Bedroom", "desc": "Nightstand matching Harden set. 28\"Hx20\"Wx15.5\"D, top/bottom drawers 15.5\"Wx3.5\"H each.", "category": "TBD", "value": "$50-100", "condition": "Very Good", "notes": "Brand: Harden", "photos": ["IMG_3834.jpeg"]}, {"id": 5, "room": "Primary Bedroom", "desc": "Telephone stand/petite desk + chair. Chair 30.5\"H, seat 13\"Wx13.75\"D; desk 19\"Wx13\"D top, 29.5\"H, alcove 15\"Wx5\"H.", "category": "TBD", "value": "$40-80", "condition": "Very Good", "notes": "No maker's mark found", "photos": ["item05_photo1.jpg", "item05_photo2.jpg"]}, {"id": 6, "room": "Primary Bedroom", "desc": "Pair of crystal-base/brass lamps, cream ruffled shades. 21\"H, 12\" shade diameter.", "category": "TBD", "value": "$40-80 (pair)", "condition": "Good", "notes": "", "photos": ["item06_photo1.jpg"]}, {"id": 7, "room": "Primary Bedroom", "desc": "Taller lamp, ivory china body, gauze shade. 25.5\"H total.", "category": "TBD", "value": "$30-60", "condition": "Body Good / Shade Excellent", "notes": "", "photos": ["item07_photo1.jpg"]},
                {"id": 8, "room": "Guest Bedroom", "desc": "Full bed with built-in headboard shelf, caramel maple, sliding doors, brass batwing pulls, brand Kling. 58\"Wx9\"Dx35.5\"H.", "category": "TBD", "value": "$150-300", "condition": "Very Good", "notes": "Maker's mark confirmed: Kling", "photos": ["item08_photo1.jpg"]}, {"id": 9, "room": "Guest Bedroom", "desc": "Matching dresser with detachable mirror, brand Kling. 40\"Wx18\"Dx30.5\"H, mirror 25\"Wx33\"H.", "category": "TBD", "value": "$150-300", "condition": "Very Good", "notes": "Maker's mark confirmed: Kling", "photos": ["item09_photo1.jpg"]}, {"id": 10, "room": "Guest Bedroom", "desc": "Wingback chair, kelly green fabric with white/gold floral over original 1952 upholstery (pictorial/settler-style print, green & brown, bead trim). 40.5\"Hx32\"Wx20.5\"D seat.", "category": "TBD", "value": "Needs appraisal", "condition": "Structure Very Good", "notes": "Original manufacturing tag found dated Oct 8 1952, shipped Oct 27 1952, customer J. Schwartz (New Brunswick, NJ), order #00980, mahogany frame, cover fabric 25-179-1D. Matches Schwartz/Kling connection on den side chair. Original fabric intact under removable slipcover - may be worth preserving rather than reupholstering. Recommend appraiser before deciding sell/donate.", "photos": ["item10_photo1.jpg"]}, {"id": 11, "room": "Guest Bedroom", "desc": "Amber pressed glass hurricane lamp.", "category": "TBD", "value": "$20-40", "condition": "Very Good", "notes": "Base 6.5\", height 18.5\"", "photos": ["item11_photo1.jpg"]}, {"id": 12, "room": "Guest Bedroom", "desc": "Green pressed glass hurricane lamp with rope-trim coaster.", "category": "TBD", "value": "$20-40", "condition": "Very Good", "notes": "Base 5\", height 12\"", "photos": ["item12_photo1.jpg"]}, {"id": 13, "room": "Guest Bedroom", "desc": "Floor lamp, brass/gold swing-arm, fluted base, cream pleated shade.", "category": "TBD", "value": "$30-60", "condition": "Good", "notes": "Base diameter 10\", height 54\" with shade", "photos": ["item13_photo1.jpg"]},
                {"id": 14, "room": "Storeroom", "desc": "Temple Stuart hutch (\"Colonial Modern Dinettes\" line). ~74-75\"H, 63\"W top/61\"W base, 14\"/19\"D. 2 short + 2 tall cabinets, base 4 drawers (6 fronts), open shelf below.", "category": "TBD", "value": "$100-200", "condition": "Good (finish wear, one door drying/separating)", "notes": "Maker's mark confirmed: Temple Stuart", "photos": ["IMG_3841.jpeg"]}, {"id": 15, "room": "Storeroom", "desc": "Corner desk matching guest bedroom Kling set. ~30\"x30\" footprint, 31\"H, 5 turned legs, 1 pencil drawer.", "category": "TBD", "value": "$75-150", "condition": "Good (hairline crack in top, glass top available)", "notes": "Maker's mark confirmed: Kling Slight crack in top surface, but a glass top is available to place over it.", "photos": ["item15_photo1.jpg", "item15_photo2.jpg"]}, {"id": 16, "room": "Living Room", "desc": "Sofa, raspberry/burgundy damask, worn seat cushions.", "category": "Donate", "value": "n/a", "condition": "Worn", "notes": "", "photos": ["item16_photo1.jpg"]}, {"id": 17, "room": "Living Room", "desc": "Floor lamp, brass base, adjustable pole.", "category": "Donate", "value": "n/a", "condition": "", "notes": "", "photos": ["item17_photo1.jpg"]}, {"id": 19, "room": "Living Room", "desc": "Porcelain table lamp, grey/ivory ceramic urn base with gold banding, brass foot (bottom 3\" brass, rising to porcelain), ivory bell shade.", "category": "Sell", "value": "$40-80", "condition": "", "notes": "Height 32\" total, base 7\" diameter", "photos": ["IMG_3796.jpeg", "IMG_3795.jpeg"]}, {"id": 20, "room": "Living Room", "desc": "Ornate brass/bronze table lamp, cast column base with arched church-window detail, cream drum shade.", "category": "Sell", "value": "$50-100", "condition": "", "notes": "Base 6\", height 32\" with finial", "photos": ["item20_photo1.jpg"]}, {"id": 21, "room": "Living Room", "desc": "Sideboard/buffet, mahogany/veneer, Empire/Chippendale-revival style, 2 shallow top drawers, 2 wide cabinet doors with fixed shelf. 36\"Wx16.5\"Dx32.5\"H.", "category": "TBD", "value": "$150-300", "condition": "Good", "notes": "", "photos": ["IMG_3791.jpeg", "IMG_3792.jpeg"]},
                {"id": 22, "room": "Living Room", "desc": "Round pedestal table, 48\" diameter (fixed, no leaf), no apron, turned baluster pedestal, 4 curved feet.", "category": "TBD", "value": "$100-250", "condition": "Very Good", "notes": "Marked underneath: \"1165 PF\" and \"Rockport\" - possible maker/pattern reference, worth researching", "photos": ["IMG_3860.jpeg", "IMG_3859.jpeg", "IMG_3861.jpeg"]}, {"id": 23, "room": "Living Room", "desc": "Antique organ/piano lamp, heavy cast metal, push-button top, small screw detailing, steampunk aesthetic. 16\"W x 12\"H.", "category": "TBD", "value": "$50-150", "condition": "Good, no rust, fully intact", "notes": "Brand: Radionic Transco, Chicago IL - originally sat atop the organ that was already sold; worth researching maker", "photos": ["IMG_3797.jpeg", "IMG_3798.jpeg"]}, {"id": 25, "room": "Porch / Outdoor", "desc": "Vintage green metal porch set - glider.", "category": "TBD", "value": "part of set - see table", "condition": "Good", "notes": "Part of 4-piece vintage green metal porch set. 70\"W x 28\"D x 29\"H, floral cushions.", "photos": ["item25_photo1.jpg"]}, {"id": 26, "room": "Porch / Outdoor", "desc": "Vintage green metal porch set - armchair with replacement cushions (more worn/bouncy).", "category": "TBD", "value": "part of set - see table", "condition": "Fair/Good - more worn than its match", "notes": "Part of 4-piece vintage green metal porch set. 31\"H x 28\"D x 24\"W.", "photos": ["item26_photo1.jpg"]}, {"id": 27, "room": "Porch / Outdoor", "desc": "Vintage green metal porch set - armchair, firmer (original-style cushions).", "category": "TBD", "value": "part of set - see table", "condition": "Good", "notes": "Part of 4-piece vintage green metal porch set. 23\"W x 29\"H x 30\"D.", "photos": ["item27_photo1.jpg"]}, {"id": 28, "room": "Porch / Outdoor", "desc": "Modern black wicker patio chair pair, Ebern Designs \"Jipson Outdoor 3 Piece Wicker Seating Group,\" brown cushions (matching table already moved to Amy's house). Each chair 25\"W x 22.64\"D x 31.1\"H. Matching table (for reference, not in this inventory): 17.6\"W x 17.6\"D x 18.19\"H.", "category": "TBD", "value": "$40-80 (pair, used)", "condition": "Good", "notes": "Original 3-piece set retailed $187.99. Dimensions not yet measured - Amy to pull specs from Wayfair listing link once located.", "photos": ["item28_photo1.jpg"]},
@@ -674,39 +625,12 @@ async function saveRemoteData(){
   }catch(e){ console.error('save failed', e); }
 }
 
-async function savePhotos(id, photosArr){
-  remoteData.photos[id] = photosArr;
-  await saveRemoteData();
-}
 
 async function saveComments(id, commentsArr){
   remoteData.comments[id] = commentsArr;
   await saveRemoteData();
 }
 
-function compressImage(file){
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        const maxDim = 900;
-        let w = img.width, h = img.height;
-        if(w > h && w > maxDim){ h = h * (maxDim/w); w = maxDim; }
-        else if(h > maxDim){ w = w * (maxDim/h); h = maxDim; }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, w, h);
-        resolve(canvas.toDataURL('image/jpeg', 0.72));
-      };
-      img.onerror = reject;
-      img.src = e.target.result;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 
 function cardTemplate(item){
   const photos = photoCache[item.id] || [];
@@ -715,18 +639,17 @@ function cardTemplate(item){
   const thumbStrip = photos.length > 1 ? `
     <div class="thumb-strip" data-id="${item.id}">
       ${photos.map((p, idx) => `<img class="thumb ${idx === activeIdx ? 'active' : ''}" src="${p}" data-id="${item.id}" data-idx="${idx}">`).join('')}
-      <div class="thumb-add" data-id="${item.id}">+</div>
     </div>` : '';
   return `
     <div class="card" data-id="${item.id}">
       <div class="tag-hole"></div>
-      <div class="tag-id">#${String(item.id).padStart(3,'0')}</div>
+      <div class="tag-id">#${String(item.id).padStart(2,'0')}</div>
       <div class="photo-zone ${mainPhoto ? 'has-photo' : ''}" data-id="${item.id}">
         ${mainPhoto
-          ? `<img src="${mainPhoto}" alt="${item.desc.replace(/"/g,'&quot;')}"><button class="photo-remove" data-id="${item.id}" data-idx="${activeIdx}">&times;</button>`
+          ? `<img src="${mainPhoto}" alt="${item.desc.replace(/"/g,'&quot;')}">`
           : `<div class="photo-placeholder">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 15l-5-4-4 3-3-2-6 5"/></svg>
-              <span>Add photo</span>
+              <span>No photo</span>
             </div>`
         }
       </div>
@@ -742,24 +665,8 @@ function cardTemplate(item){
           <span class="value">${item.value && item.value !== 'n/a' ? item.value : '&mdash;'}</span>
           <span class="condition">${item.condition || ''}</span>
         </div>
-        ${mainPhoto ? `<button class="add-another-btn" data-id="${item.id}">+ Add another angle</button>` : ''}
-        <div class="comments-section" data-id="${item.id}">
-          <div class="comments-label">Notes from family &amp; friends</div>
-          <div class="comments-list">
-            ${(commentsCache[item.id] && commentsCache[item.id].length)
-              ? commentsCache[item.id].map(c => `
-                <div class="comment-item">
-                  <span class="comment-name">${(c.name || 'Anonymous').replace(/</g,'&lt;')}:</span>
-                  <span class="comment-text">${(c.text || '').replace(/</g,'&lt;')}</span>
-                </div>`).join('')
-              : `<div class="comment-empty">No notes yet &mdash; be the first!</div>`
-            }
-          </div>
-          <div class="comment-form">
-            <input type="text" class="comment-name-input" data-id="${item.id}" placeholder="Your name">
-            <textarea class="comment-text-input" data-id="${item.id}" placeholder="Leave a note about this piece..." rows="2"></textarea>
-            <button class="comment-submit" data-id="${item.id}">Add note</button>
-          </div>
+        <div class="email-owner">
+          <a class="email-owner-link" href="mailto:asmason@fastmail.com?subject=${encodeURIComponent('Item #' + String(item.id).padStart(2,'0'))}">Email the owner about this item</a>
         </div>
       </div>
       <input type="file" accept="image/*" capture="environment" id="file-${item.id}">
@@ -768,77 +675,11 @@ function cardTemplate(item){
 }
 
 function attachHandlers(){
-  document.querySelectorAll('.photo-zone').forEach(zone => {
-    zone.addEventListener('click', (e) => {
-      if(e.target.classList.contains('photo-remove')) return;
-      const id = zone.dataset.id;
-      document.getElementById('file-' + id).click();
-    });
-  });
-  document.querySelectorAll('.add-another-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const id = btn.dataset.id;
-      document.getElementById('file-' + id).click();
-    });
-  });
-  document.querySelectorAll('input[type=file]').forEach(input => {
-    input.addEventListener('change', async (e) => {
-      const id = input.id.replace('file-','');
-      const file = e.target.files[0];
-      if(!file) return;
-      const dataUrl = await compressImage(file);
-      if(!photoCache[id]) photoCache[id] = [];
-      photoCache[id].push(dataUrl);
-      activePhotoIndex[id] = photoCache[id].length - 1;
-      await savePhotos(id, photoCache[id]);
-      render();
-    });
-  });
-  document.querySelectorAll('.photo-remove').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      e.stopPropagation();
-      const id = btn.dataset.id;
-      const idx = parseInt(btn.dataset.idx, 10);
-      if(photoCache[id]){
-        photoCache[id].splice(idx, 1);
-        if(photoCache[id].length === 0){
-          delete photoCache[id];
-          delete remoteData.photos[id];
-          await saveRemoteData();
-        } else {
-          await savePhotos(id, photoCache[id]);
-        }
-        activePhotoIndex[id] = 0;
-      }
-      render();
-    });
-  });
   document.querySelectorAll('.thumb').forEach(thumb => {
     thumb.addEventListener('click', (e) => {
       const id = thumb.dataset.id;
       const idx = parseInt(thumb.dataset.idx, 10);
       activePhotoIndex[id] = idx;
-      render();
-    });
-  });
-  document.querySelectorAll('.thumb-add').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = btn.dataset.id;
-      document.getElementById('file-' + id).click();
-    });
-  });
-  document.querySelectorAll('.comment-submit').forEach(btn => {
-    btn.addEventListener('click', async (e) => {
-      const id = btn.dataset.id;
-      const nameInput = document.querySelector('.comment-name-input[data-id="' + id + '"]');
-      const textInput = document.querySelector('.comment-text-input[data-id="' + id + '"]');
-      const text = textInput.value.trim();
-      if(!text) return;
-      const name = nameInput.value.trim() || 'Anonymous';
-      if(!commentsCache[id]) commentsCache[id] = [];
-      commentsCache[id].push({name, text, ts: Date.now()});
-      await saveComments(id, commentsCache[id]);
       render();
     });
   });
